@@ -37,9 +37,9 @@ const STACK = [
 
 const TEAM = [
   ["Khushwant Rajpurohit", "Team Lead", "Agent reasoning & planning"],
+  ["Keshav Thathera", "Co-Lead", "Human-in-the-loop, frontend & QA"],
   ["Nirmal Rajpurohit", "Member", "Knowledge base & RAG pipeline"],
   ["Piyush Prajapat", "Member", "Tool integration & backend"],
-  ["Keshav Thathera", "Member", "Human-in-the-loop, frontend & QA"],
 ];
 
 export default function AboutPage() {

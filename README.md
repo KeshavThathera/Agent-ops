@@ -145,5 +145,5 @@ UI help text that *names* the `ANTHROPIC_API_KEY` variable; no key or password v
 - [docs/DEPLOY.md](docs/DEPLOY.md) — one-container deployment to Render (free tier) or any Docker host
 
 ## Team
-Khushwant Rajpurohit (Team Lead, agent reasoning & planning) · Nirmal Rajpurohit (knowledge base & RAG) ·
-Piyush Prajapat (tool integration & backend) · Keshav Thathera (human-in-the-loop, frontend & QA)
+Khushwant Rajpurohit (Team Lead, agent reasoning & planning) · Keshav Thathera (Co-Lead, human-in-the-loop,
+frontend & QA) · Nirmal Rajpurohit (knowledge base & RAG) · Piyush Prajapat (tool integration & backend)
