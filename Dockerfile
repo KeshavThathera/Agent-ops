@@ -8,9 +8,10 @@ COPY frontend/package.json frontend/package-lock.json ./
 RUN npm ci --no-audit --no-fund
 COPY frontend/ ./
 ENV NEXT_TELEMETRY_DISABLED=1 BACKEND_URL=http://127.0.0.1:8000
+# public/ may be absent in a git checkout (git does not track empty folders), so copy it only if present.
 RUN npm run build \
  && mkdir -p .next/standalone/public .next/standalone/.next \
- && cp -r public/. .next/standalone/public/ \
+ && if [ -d public ]; then cp -r public/. .next/standalone/public/; fi \
  && cp -r .next/static .next/standalone/.next/static
 
 # ---------- 2. runtime: Python backend + Node binary for the web server ----------
