@@ -7,7 +7,9 @@ The repository contains a single-container production setup:
   `/api/*` to it, so the browser sees one origin (secure cookies, SSE, no CORS).
 - `deploy/start.sh` — runs `python -m app.cli init` (migrations + idempotent seed), then both servers; if either
   exits, the container exits and Render restarts it.
-- `render.yaml` — Render Blueprint for one free Docker web service with health check `/api/health`.
+- `render.yaml` — Render Blueprint for one free Docker web service with health check `/healthz` (answered by
+  Next.js itself; it also reports whether the backend is reachable). On start, `start.sh` logs a self-test of
+  `/healthz`, `/login` and `/api/health` so the deploy log shows whether the proxy works.
 
 ## Steps
 
@@ -40,7 +42,8 @@ Every push to the default branch redeploys automatically (`autoDeploy: true`).
 
 ## Verify a deployment
 ```bash
-curl https://<your-app>.onrender.com/api/health
+curl https://<your-app>.onrender.com/healthz      # answered by Next.js; reports backend reachability
+curl https://<your-app>.onrender.com/api/health   # backend through the /api proxy
 cd frontend && BASE_URL=https://<your-app>.onrender.com npx playwright test
 ```
 The Playwright suite creates a few workflows on the deployed demo (they disappear on the next restart).
