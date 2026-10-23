@@ -37,7 +37,7 @@ const STACK = [
 
 const TEAM = [
   ["Khushwant Rajpurohit", "Team Lead", "Agent reasoning & planning"],
-  ["Keshav Thathera", "Co-Lead", "Human-in-the-loop, frontend & QA"],
+  ["Keshav Thathera", "Co-Lead", "System architecture, full-stack development & deployment"],
   ["Nirmal Rajpurohit", "Member", "Knowledge base & RAG pipeline"],
   ["Piyush Prajapat", "Member", "Tool integration & backend"],
 ];
