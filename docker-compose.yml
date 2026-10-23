@@ -1,0 +1,40 @@
+# Full stack with PostgreSQL. Not executed on the development machine (Docker daemon was not running);
+# the local default is SQLite. See README "Docker" section.
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: agentops
+      POSTGRES_PASSWORD: agentops
+      POSTGRES_DB: agentops
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agentops"]
+      interval: 3s
+      retries: 20
+
+  backend:
+    build: ./backend
+    env_file: ./backend/.env.example
+    environment:
+      DATABASE_URL: postgresql+psycopg://agentops:agentops@db:5432/agentops
+      CORS_ORIGINS: http://localhost:3000
+      # ANTHROPIC_API_KEY: set in your shell or an untracked .env to enable live mode
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    depends_on:
+      db: { condition: service_healthy }
+    ports: ["8000:8000"]
+    volumes: [backend-data:/app/data]
+
+  frontend:
+    build:
+      context: ./frontend
+      args: { BACKEND_URL: http://backend:8000 }
+    environment:
+      BACKEND_URL: http://backend:8000
+    depends_on: [backend]
+    ports: ["3000:3000"]
+
+volumes:
+  pgdata:
+  backend-data:

@@ -1,0 +1,4 @@
+# Vector retrieval (RETRIEVAL_BACKEND=chroma). Downloads a ~80 MB ONNX embedding model on first use.
+chromadb==1.5.9
+# PostgreSQL driver (DATABASE_URL=postgresql+psycopg://...). Used by docker-compose; not exercised in local tests.
+psycopg[binary]>=3.2,<4

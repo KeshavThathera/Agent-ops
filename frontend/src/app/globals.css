@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+/* Design tokens: deep navy chrome, soft neutral canvas, indigo actions,
+   teal success, amber review, red failure. */
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-mono-face), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --color-navy-950: #0a1222;
+  --color-navy-900: #0e1930;
+  --color-navy-800: #15233f;
+  --color-navy-700: #1e3054;
+  --color-navy-600: #2b4170;
+  --color-navy-300: #9fb0d0;
+  --color-navy-200: #c6d1e6;
+
+  --color-canvas: #f4f6f9;
+  --color-panel: #ffffff;
+  --color-line: #e3e7ee;
+  --color-ink: #111827;
+  --color-ink-2: #374151;
+  --color-muted: #5b6474;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+}
+
+body {
+  font-family: var(--font-sans);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* Visible keyboard focus everywhere */
+:focus-visible {
+  outline: 2px solid #4f46e5;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+dialog::backdrop {
+  background: rgb(10 18 34 / 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 180ms ease-out both;
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+}

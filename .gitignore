@@ -1,0 +1,19 @@
+# Python
+backend/.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+backend/.env
+backend/data/
+
+# Node
+frontend/node_modules/
+frontend/.next/
+frontend/test-results/
+frontend/playwright-report/
+frontend/.env*.local
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.claude/

@@ -1,0 +1,24 @@
+# Render Blueprint: one free Docker web service (Next.js + FastAPI in one container).
+# Data lives in the container's SQLite file and is re-seeded on every start/redeploy.
+services:
+  - type: web
+    name: agentops-desk
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: APP_ENV
+        value: demo
+      - key: DEMO_ACCOUNTS_ENABLED
+        value: "true"
+      - key: COOKIE_SECURE
+        value: "true"
+      - key: WORKER_ENABLED
+        value: "true"
+      - key: RETRIEVAL_BACKEND
+        value: keyword
+      # Deliberately NOT set: ANTHROPIC_API_KEY. With public demo accounts, anyone could
+      # trigger live runs on your key. The public site runs in demo mode.
