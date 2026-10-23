@@ -41,6 +41,14 @@ async function request<T>(method: string, path: string, body?: Json | FormData):
     if (!res.ok) throw new ApiError(res.status, "bad_gateway", res.status >= 500 ? "The API server is unavailable." : text.slice(0, 200));
     return text as T;
   }
+  // /me and /system/status are the start-up session probe; AppShell sends never-signed-in visitors to /login itself.
+  const sessionProbe = path === "/me" || path === "/system/status" || path.startsWith("/auth/");
+  if (res.status === 401 && !sessionProbe && typeof window !== "undefined" && !window.location.pathname.startsWith("/login")) {
+    // Session ended (sign-out elsewhere, expiry, or the demo server restarted and re-seeded): return to sign-in once.
+    const next = encodeURIComponent(window.location.pathname + window.location.search);
+    // eslint-disable-next-line @next/next/no-location-assign-relative-destination
+    window.location.assign(`/login?expired=1&next=${next}`);
+  }
   if (!res.ok) {
     const err = (data as { error?: { code: string; message: string; details?: unknown } })?.error;
     throw new ApiError(res.status, err?.code ?? "http_error", err?.message ?? `Request failed (${res.status})`, err?.details);

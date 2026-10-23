@@ -9,6 +9,8 @@ sandboxed diagnostics, creates a ticket, recommends a grounded fix, pauses for h
 requires it, executes only approved actions, verifies the result, and resolves the ticket only when
 verification passes. Every step is persisted, streamed live to the UI and recorded in an audit trail.
 
+**Live demo:** https://agentops-desk.onrender.com (free tier: sleeps when idle, data resets on restart — see [docs/DEPLOY.md](docs/DEPLOY.md)).
+
 > The original project reports were not available while this was built; the implementation follows the written
 > specification. Nothing in the app presents unverified claims from the reports as facts.
 
@@ -126,12 +128,12 @@ Frontend: `BACKEND_URL` (default `http://127.0.0.1:8000`) — where Next.js prox
 
 ```bash
 cd backend && .venv\Scripts\python -m pytest            # 42 tests (incl. MCP subprocess + ChromaDB)
-cd frontend && npx playwright install chromium && npx playwright test   # 7 E2E tests (desktop + mobile)
+cd frontend && npx playwright install chromium && npx playwright test   # 8 E2E tests (desktop + mobile)
 cd frontend && npx tsc --noEmit && npx eslint src && npm run build
 ```
 
 Results from the final run on the development machine (Windows 11, Python 3.13.7, Node 22.17.1):
-backend **42 passed**; Playwright **7 passed**; typecheck, lint and production build clean.
+backend **42 passed**; Playwright **8 passed** (locally, and 7/7 against the live Render site before the session-expiry test was added); typecheck, lint and production build clean.
 See [docs/ACCEPTANCE.md](docs/ACCEPTANCE.md) for how each acceptance criterion is verified.
 
 Client-bundle check: `grep -rE "sk-ant|ANTHROPIC_API_KEY|demo-pass" frontend/.next/static` matches only the

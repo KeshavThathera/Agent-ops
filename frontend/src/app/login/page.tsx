@@ -28,9 +28,12 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
+  const [expired, setExpired] = useState(false);
 
   useEffect(() => {
     api.get<AuthConfig>("/auth/config").then(setCfg).catch((e: ApiError) => setCfgError(e.message));
+    const id = setTimeout(() => setExpired(new URLSearchParams(window.location.search).get("expired") === "1"), 0);
+    return () => clearTimeout(id);
   }, []);
 
   const go = (u: User) => window.location.assign(u.role === "employee" && nextPath() === "/" ? "/support" : nextPath());
@@ -92,6 +95,13 @@ export default function LoginPage() {
           <h1 className="text-xl font-semibold">Sign in</h1>
           <p className="mt-1 text-sm text-muted">Use your AgentOps Desk account.</p>
 
+          {expired && !error && (
+            <div className="mt-4">
+              <Notice tone="amber" title="Your session ended">
+                Please sign in again. On the hosted demo this also happens whenever the server restarts and the demo data is reset.
+              </Notice>
+            </div>
+          )}
           {cfgError && <div className="mt-4"><Notice tone="red" title="API unavailable">{cfgError}</Notice></div>}
           {error && <div className="mt-4"><Notice tone="red" title="Could not sign in">{error}</Notice></div>}
 

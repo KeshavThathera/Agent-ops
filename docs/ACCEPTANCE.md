@@ -25,7 +25,7 @@ B = backend pytest (`backend/tests`), E = Playwright (`frontend/e2e`). All liste
 | 19 | No provider keys in client bundle or logs | B `test_secrets_never_leave_server` (API responses, stored messages, audit) · bundle grep in README |
 | 20 | Mobile and keyboard usable | E `core pages are usable on a phone without horizontal scrolling`, `keyboard: skip link and dialog focus` |
 
-Additional coverage: unsafe request (G), printer takeover/escalation (D), cancel, policy-change audit and locked
+Additional coverage: an ended session returns to sign-in with an explanation (E), unsafe request (G), printer takeover/escalation (D), cancel, policy-change audit and locked
 policies, CSRF header, tool-layer blocking of unknown tools and invalid args, live-mode repair/failed-repair/provider
 errors with a mocked model, verifier rejection of unsupported conclusions, uploads (TXT/MD, unsupported type, fake
 PDF, scanned PDF → OCR required, size limit, role check), real MCP subprocess invocation, ChromaDB retrieval and

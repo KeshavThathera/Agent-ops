@@ -62,6 +62,16 @@ test("evidence link opens the cited chunk in the source article", async ({ page 
   await expect(page.getByText("cited excerpt")).toBeVisible();
 });
 
+test("an ended session returns to sign-in with an explanation", async ({ page }) => {
+  await signIn(page, "Sana Khan");
+  await page.goto("/tickets");
+  await expect(page.getByRole("heading", { name: "Tickets" })).toBeVisible();
+  await page.context().clearCookies(); // e.g. the hosted demo restarted and re-seeded
+  await page.getByLabel("Filter by priority").selectOption("high");
+  await expect(page).toHaveURL(/\/login\?expired=1/);
+  await expect(page.getByText("Your session ended")).toBeVisible();
+});
+
 test("keyboard: skip link and dialog focus", async ({ page }) => {
   await signIn(page, "Sana Khan");
   await page.goto("/");
